@@ -63,7 +63,19 @@ dairy_queen <- fastfood %>%
 
 1.  Make a plot (or plots) to visualize the distributions of the amount of calories from fat of the options from these two restaurants.  How do their centers, shapes, and spreads compare?
 
-**Insert your answer here**
+**KH: Dairy queen has a bi-modal distribution that is slightly right skewed between 0 and 1,250 calories, while McDonalds has a unimodal distribution which even more right skewed due outliers all the way out to 2,400 calories. In general, McDonald's offerings seem to have a higher spread than Dairy Queen's**
+
+```{r}
+# Plot Dairy Queen distribution
+ggplot(dairy_queen, aes(x = calories)) +
+  geom_histogram(fill = "#404080", alpha = 0.6)
+```
+
+```{r}
+# Plot McDonald's distribution
+ggplot(mcdonalds, aes(x = calories)) + 
+  geom_histogram(fill = "#69b3a2", alpha = 0.6)
+```
 
 ## The normal distribution
 
@@ -91,7 +103,7 @@ After initializing a blank plot with `geom_blank()`, the `ggplot2` package (with
 2.  Based on the this plot, does it appear that the data follow a nearly normal 
     distribution?
 
-**Insert your answer here**
+**KH: The data roughly follows a normal distribution**
 
 ## Evaluating the normal distribution
 
@@ -118,7 +130,15 @@ The first argument indicates how many numbers you'd like to generate, which we s
 
 3.  Make a normal probability plot of `sim_norm`.  Do all of the points fall on the line?  How does this plot compare to the probability plot for the real data? (Since `sim_norm` is not a data frame, it can be put directly into the `sample` argument and the `data` argument can be dropped.)
 
-**Insert your answer here**
+**KH: No, the right tail of the DQ fat calorie distribution deviates from the simulated normal distribution, specifically past the first standard deviation.**
+```{r}
+ggplot(data = dairy_queen, aes(sample = cal_fat)) + 
+  geom_line(stat = "qq") +
+  geom_point(stat = 'qq') +
+  geom_line(stat = 'qq', aes(sample = sim_norm), color = 'tomato') +
+  geom_point(stat = 'qq',aes(sample = sim_norm), color = 'tomato')
+```
+
 
 Even better than comparing the original plot to a single plot generated from a normal distribution is to compare it to many more plots using the following function. It shows the Q-Q plot corresponding to the original data in the top left corner, and the Q-Q plots of 8 different simulated normal data.  It may be helpful to click the zoom button in the plot window.
 
@@ -130,12 +150,16 @@ qqnormsim(sample = cal_fat, data = dairy_queen)
     created for the simulated data?  That is, do the plots provide evidence that the
     calories are nearly normal?
 
-**Insert your answer here**
+**KH: When compared to additional plots, the calories from fat distribution looks much more like a normal distribution. Specifically the deviation in the right tail we noticed earlier seems more reasonable as we can see similar deviations in the simulated plots.**
 
 5.  Using the same technique, determine whether or not the calories from McDonald's
     menu appear to come from a normal distribution.
 
-**Insert your answer here**
+**KH: McDonalds is clearly off the normal distribution, especially in the right tail.**
+
+```{r}
+qqnormsim(sample = cal_fat, data = mcdonalds)
+```
 
 ## Normal probabilities
 
@@ -164,6 +188,11 @@ Although the probabilities are not exactly the same, they are reasonably close. 
 6.  Write out two probability questions that you would like to answer about any of the restaurants in this dataset.  Calculate those probabilities using both the theoretical normal distribution as well as the empirical distribution (four probabilities in all).  Which one had a closer agreement between the two methods?
 
 **Insert your answer here**
+
+```{r}
+
+```
+
 
 * * *
 
